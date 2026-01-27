@@ -16,14 +16,16 @@ const AppbarLang = () => {
 
   useEffect(() => {
   const handleClickOutside = (e) => {
+    // ref 안에 클릭이 포함되어 있지 않으면 닫기
+    console.log(e.target);
     if(!countryLangRef.current.contains(e.target)) {
       setIsDroplistEnabled(false);
     }
   };
 
   window.addEventListener('click', handleClickOutside);
-  return () => {
-    window.addEventListener('click', handleClickOutside);
+  return () => { // clean up
+    window.removeEventListener('click', handleClickOutside);
   }
   }, []);
 
@@ -63,7 +65,7 @@ const AppbarLang = () => {
   }, []);
 
   return (
-    <div className='appbar-dropdown relative w-30 h-10 mx-7'>
+    <div className='appbar-dropdown relative w-30 h-10 mx-7' ref={countryLangRef}>
       {/* 드롭다운 메뉴 활성화 버튼(현재 선택 된 나라) */}
       <div className='drop-selected flex items-center w-full h-full gap-x-3 px-1 py-3 cursor-pointer' onClick={handleDroplistEnable}>
         <div className='drop-selected-img w-6 h-6 min-w-6 overflow-hidden rounded-full'>
