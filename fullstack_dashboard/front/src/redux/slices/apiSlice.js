@@ -10,24 +10,35 @@ const createFetchThunk = (actionType, apiUrl) => {
 };
 
 export const fetchVisitors = createFetchThunk('fetchVisitors', GET_VISITORS_API_URL);
+export const fetchRevenue = createFetchThunk('fetchTotalRevenue', GET_REVENUE_API_URL);
 
+
+// 공통 부분
 const handleFulfilled = (stateKey) => (state, action) => {
   state[stateKey] = action.payload;
 };
 const handlerejected = (state, action) => {
-  console.log('error', action.payload);
+  console.log('Error', action.payload);
   state.isError = true;
 };
 
+
+// 추가 부분
 const apisSlice = createSlice({
   name: 'apis',
   initialState: {
-    visitorsData: []
+    visitorsData: null,
+    revenueData: null,
+    isError: false
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchVisitors.fulfilled, handleFulfilled('visitorsData'))
+    builder
+    .addCase(fetchVisitors.fulfilled, handleFulfilled('visitorsData'))
     .addCase(fetchVisitors.rejected, handlerejected) 
-    }
-  
+    .addCase(fetchRevenue.fulfilled, handleFulfilled('revenueData'))
+    .addCase(fetchRevenue.rejected, handlerejected)
+  }
 });
+
+export default apisSlice.reducer;
