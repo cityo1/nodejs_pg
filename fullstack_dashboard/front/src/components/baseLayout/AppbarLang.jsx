@@ -17,7 +17,6 @@ const AppbarLang = () => {
   useEffect(() => {
   const handleClickOutside = (e) => {
     // ref 안에 클릭이 포함되어 있지 않으면 닫기
-    console.log(e.target);
     if(!countryLangRef.current.contains(e.target)) {
       setIsDroplistEnabled(false);
     }
@@ -28,8 +27,6 @@ const AppbarLang = () => {
     window.removeEventListener('click', handleClickOutside);
   }
   }, []);
-
-  console.log(isDroplistEnabled);
 
   const countrySelectedHandler = (country, flag, lang) => {
     setSelectedCountry({
