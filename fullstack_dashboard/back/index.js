@@ -13,6 +13,10 @@ app.get('/', (request, response) => {
 
 app.use(require('./routes/visitorsRoute'));
 app.use(require('./routes/revenueRoute'));
+app.use(require('./routes/customerRoute'));
+app.use(require('./routes/targetRealityRoute'));
+app.use(require('./routes/topProductRoute'));
+app.use(require('./routes/salesMapRoute'));
 
 app.listen(process.env.PORT, () => {
 

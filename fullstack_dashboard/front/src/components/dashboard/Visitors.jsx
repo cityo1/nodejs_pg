@@ -8,10 +8,32 @@ const formatLegendValue = (value) => {
   return value.replace('_', ' ')
 }
 
+const formatTooltipValue = (value, name) => {
+  return `${value.replace('_', ' ')} : ${name}`
+}
+
 const CustomTooltipContent = ({payload}) => {
   if(!payload || !payload.length) return null
+
   return (
-    <div></div>
+    <div className='custom-recharts-tooltip'>
+      <p className='recharts-tooltip-label'>
+        {
+          payload[0].payload?.month.charAt(0).toUpperCase() + payload[0].payload?.month.slice(1)
+        }
+      </p>
+      <ul className='recharts-tooltip-item-list'>
+        {
+          payload.map((item, index) => {
+            return (
+              <li key={index}>
+                {formatTooltipValue(item.name, item.value)}
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
   )
 }
 
@@ -28,10 +50,8 @@ const Visitors = () => {
   }, [dispatch])
 
 
-  console.log(state)
+  // console.log(state)
   // rechart options: https://coding-daily.tistory.com/394
-
-
 
   return (
     <div className='block-wrap'>

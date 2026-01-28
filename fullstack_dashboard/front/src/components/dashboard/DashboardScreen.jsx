@@ -1,6 +1,10 @@
 import React from 'react'
 import Sales from './Sales'
 import Visitors from './Visitors'
+import TotalRevenue from './TotalRevenue'
+import Customers from './Customers'
+import TargetReality from './TargetReality'
+import TopProduct from './TopProduct'
 
 const DashboardScreen = () => {
   return (
@@ -8,6 +12,14 @@ const DashboardScreen = () => {
       <div className='grid grid-cols-[4fr_3fr] gap-x-[14px]'>
         <Sales />
         <Visitors />
+      </div>
+      <div className='grid grid-cols-[3fr_2fr_2fr] gap-x-[14px]'>
+        <TotalRevenue />
+        <Customers />
+        <TargetReality />
+      </div>
+      <div className='grid grid-cols-[3fr_2fr_2fr] gap-x-[14px]'>
+        <TopProduct />
       </div>
     </div>
   )
