@@ -5,6 +5,8 @@ import TotalRevenue from './TotalRevenue'
 import Customers from './Customers'
 import TargetReality from './TargetReality'
 import TopProduct from './TopProduct'
+import SalesMap from './SalesMap'
+import VolumeServices from './VolumeServices'
 
 const DashboardScreen = () => {
   return (
@@ -20,6 +22,8 @@ const DashboardScreen = () => {
       </div>
       <div className='grid grid-cols-[3fr_2fr_2fr] gap-x-[14px]'>
         <TopProduct />
+        <SalesMap />
+        <VolumeServices />
       </div>
     </div>
   )

@@ -17,6 +17,7 @@ app.use(require('./routes/customerRoute'));
 app.use(require('./routes/targetRealityRoute'));
 app.use(require('./routes/topProductRoute'));
 app.use(require('./routes/salesMapRoute'));
+app.use(require('./routes/volumeServiceRoute'));
 
 app.listen(process.env.PORT, () => {
 

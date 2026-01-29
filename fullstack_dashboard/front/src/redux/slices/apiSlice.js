@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GET_VISITORS_API_URL, GET_REVENUE_API_URL, GET_CUSTOMER_API_URL, GET_TARGET_REALITY_API_URL, GET_TOP_PRODUCT_API_URL } from '../../constants/apiUrls';
+import { GET_VISITORS_API_URL, GET_REVENUE_API_URL, GET_CUSTOMER_API_URL, GET_TARGET_REALITY_API_URL, GET_TOP_PRODUCT_API_URL, GET_SALES_MAP_API_URL, GET_VOLUME_SERVICE_API_URL } from '../../constants/apiUrls';
 import { getRequest } from '../../constants/requestMethods';
 
 // 공통된 비동기 액션 생성 로직을 별도의 함수로 분리
@@ -14,6 +14,8 @@ export const fetchRevenue = createFetchThunk('fetchRevenue', GET_REVENUE_API_URL
 export const fetchCustomer = createFetchThunk('fetchCustomer', GET_CUSTOMER_API_URL);
 export const fetchTargetReality = createFetchThunk('fetchTargetReality', GET_TARGET_REALITY_API_URL);
 export const fetchTopProduct = createFetchThunk('fetchTopProduct', GET_TOP_PRODUCT_API_URL);
+export const fetchSalesMap = createFetchThunk('fetchSalesMap', GET_SALES_MAP_API_URL);
+export const fetchVolumeServices = createFetchThunk('fetchVolumeServices', GET_VOLUME_SERVICE_API_URL);
 
 // 공통 부분
 const handleFulfilled = (stateKey) => (state, action) => {
@@ -34,6 +36,8 @@ const apisSlice = createSlice({
     customerData: null,
     targetRealityData: null,
     topProductData: null,
+    salesMapData: null,
+    volumeServiceData: null,
     isError: false,
   },
   reducers: {},
@@ -41,14 +45,24 @@ const apisSlice = createSlice({
     builder
     .addCase(fetchVisitors.fulfilled, handleFulfilled('visitorsData'))
     .addCase(fetchVisitors.rejected, handlerejected) 
+
     .addCase(fetchRevenue.fulfilled, handleFulfilled('revenueData'))
     .addCase(fetchRevenue.rejected, handlerejected)
+
     .addCase(fetchCustomer.fulfilled, handleFulfilled('customerData'))
     .addCase(fetchCustomer.rejected, handlerejected)
+
     .addCase(fetchTargetReality.fulfilled, handleFulfilled('targetRealityData'))
     .addCase(fetchTargetReality.rejected, handlerejected)
+
     .addCase(fetchTopProduct.fulfilled, handleFulfilled('topProductData'))
     .addCase(fetchTopProduct.rejected, handlerejected)
+
+    .addCase(fetchSalesMap.fulfilled, handleFulfilled('salesMapData'))
+    .addCase(fetchSalesMap.rejected, handlerejected)
+
+    .addCase(fetchVolumeServices.fulfilled, handleFulfilled('volumeServicesData'))
+    .addCase(fetchVolumeServices.rejected, handlerejected)
   }
 });
 
