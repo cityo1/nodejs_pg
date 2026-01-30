@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import ModeCtrl from './ModeCtrl';
 import { MdOutlineMenu } from 'react-icons/md';
 import { Icons } from '../../assets/icons';
@@ -6,8 +7,12 @@ import AppbarLang from './AppbarLang';
 import AppbarProfile from './AppbarProfile';
 
 const Appbar = () => {
+  const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
+
   return (
-    <div className="dark:bg-gray-950 bg-white dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] py-3 px-6 rounded-sm dark:text-white text-gray-950 w-[calc(80%-28px)] ml-[calc(20%+14px)]">
+    <div
+      className={`dark:bg-gray-950 bg-white dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] py-3 px-6 rounded-sm dark:text-white text-gray-950 ${isSidebarOpen ? 'w-[calc(100%-28px)] ml-[14px]' : 'w-[calc(80%-28px)] ml-[calc(20%+14px)]'}`}
+    >
       <div className="appbar-content flex items-center justify-between flex-wrap">
         <div className="appbar-left flex items-center justify-start gap-x-3">
           <button type="button" className="items-center hidden">
@@ -31,7 +36,6 @@ const Appbar = () => {
             </form>
           </div>
           <AppbarLang />
-
           <button className="w-8 h-8 rounded-md relative">
             <img src={Icons.NotificationOrange} alt="" className="w-6" />
             <span className="absolute rounded-full w-2 h-2 bg-red-600 top-1 right-[10px]"></span>
