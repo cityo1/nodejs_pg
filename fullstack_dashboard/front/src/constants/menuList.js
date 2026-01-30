@@ -1,6 +1,5 @@
 import { Icons } from '../assets/icons';
 
-
 export const MENU_LISTS = [
   {
     icon: Icons.Chart,
@@ -46,7 +45,6 @@ export const MENU_LISTS = [
   },
 ];
 
-
 export const routes = [
   {
     path: '/',
@@ -78,7 +76,6 @@ export const routes = [
   },
 ];
 
-
 export const SALES_LISTS = [
   {
     src: Icons.CardSales,
@@ -106,7 +103,6 @@ export const SALES_LISTS = [
   },
 ];
 
-
 export const TARGET_REALITY_LISTS = [
   {
     title: 'Reality Sales',
@@ -122,7 +118,6 @@ export const TARGET_REALITY_LISTS = [
   },
 ];
 
-
 // Mapping of color names to their respective hex codes
 export const COLOR_MAP = {
   red: '#ef4444',
@@ -131,6 +126,3 @@ export const COLOR_MAP = {
   emerald: '#00e096',
   yellow: '#ffcf00',
 };
-
-
-

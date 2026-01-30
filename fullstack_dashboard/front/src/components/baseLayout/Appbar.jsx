@@ -11,7 +11,7 @@ const Appbar = () => {
 
   return (
     <div
-      className={`dark:bg-gray-950 bg-white dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] py-3 px-6 rounded-sm dark:text-white text-gray-950 ${isSidebarOpen ? 'w-[calc(100%-28px)] ml-[14px]' : 'w-[calc(80%-28px)] ml-[calc(20%+14px)]'}`}
+      className={`dark:bg-gray-950 bg-white dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] py-3 px-6 rounded-sm dark:text-white text-gray-950 w-full`}
     >
       <div className="appbar-content flex items-center justify-between flex-wrap">
         <div className="appbar-left flex items-center justify-start gap-x-3">
