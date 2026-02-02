@@ -1,21 +1,31 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ModeCtrl from './ModeCtrl';
 import { MdOutlineMenu } from 'react-icons/md';
 import { Icons } from '../../assets/icons';
 import AppbarLang from './AppbarLang';
 import AppbarProfile from './AppbarProfile';
+import { setSidebarClose } from '../../redux/slices/sidebarSlice';
 
 const Appbar = () => {
   const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
+  const dispatch = useDispatch();
 
   return (
     <div
-      className={`dark:bg-gray-950 bg-white dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] py-3 px-6 rounded-sm dark:text-white text-gray-950 w-full`}
+      className={`dark:bg-gray-950 bg-white dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] py-3 px-6 rounded-sm dark:text-white text-gray-950 ${
+        isSidebarOpen
+          ? 'w-auto ml-[14px] mr-[14px]'
+          : 'w-[calc(80%-28px)] ml-[calc(20%+14px)]'
+      }`}
     >
       <div className="appbar-content flex items-center justify-between flex-wrap">
         <div className="appbar-left flex items-center justify-start gap-x-3">
-          <button type="button" className="items-center hidden">
+          <button
+            type="button"
+            className={`items-center ${isSidebarOpen ? 'flex' : 'hidden'}`}
+            onClick={() => dispatch(setSidebarClose())}
+          >
             <MdOutlineMenu size={24} />
           </button>
           <h3 className="text-xl font-semibold">Dashboard</h3>

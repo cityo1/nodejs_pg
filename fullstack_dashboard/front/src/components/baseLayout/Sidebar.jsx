@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icons } from '../../assets/icons';
 import { MdOutlineClose } from 'react-icons/md';
 import { MENU_LISTS, routes } from '../../constants/menuList';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSidebarOpen } from '../../redux/slices/sidebarSlice';
+import {
+  setSidebarOpen,
+  setSidebarClose,
+} from '../../redux/slices/sidebarSlice';
 
 const Sidebar = () => {
   const [currentTab, clickedTab] = useState(0);
@@ -19,9 +22,28 @@ const Sidebar = () => {
     clickedTab(index);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1080) {
+        dispatch(setSidebarOpen());
+      } else {
+        dispatch(setSidebarClose());
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [dispatch]);
+
   return (
     <div
-      className={`dark:bg-gray-950 bg-white py-5 px-4 dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] w-[20%] flex flex-col rounded-sm z-[1000] fixed h-full ${isSidebarOpen ? 'left-[-20%]' : 'left-0'} hidden lg:flex`}
+      className={`dark:bg-gray-950 bg-white py-5 px-4 dark:shadow-[0_0.125rem_0.25rem_rgba(255,255,255,0.3)] shadow-[0_0.125rem_0.25rem_rgba(165,163,174,0.3)] w-[20%] flex flex-col rounded-sm z-[1000] fixed h-full ${
+        isSidebarOpen ? 'left-[-20%]' : 'left-0'
+      } `}
     >
       <div className="sidebar-top mb-[32px] flex items-center justify-between">
         <div className="sidebar-brand flex items-center justify-center gap-x-[12px]">
@@ -53,18 +75,28 @@ const Sidebar = () => {
                 <li key={index} className="menu-item">
                   <Link
                     to={routes[index].path}
-                    className={`h-[44px] flex items-center gap-x-[14px] py-0.5 px-5 font-medium ${index === currentTab ? 'bg-blue-700 dark:text-white text-gray-950 rounded-sm' : ''}`}
+                    className={`h-[44px] flex items-center gap-x-[14px] py-0.5 px-5 font-medium ${
+                      index === currentTab
+                        ? 'bg-blue-700 dark:text-white text-gray-950 rounded-sm'
+                        : ''
+                    }`}
                     onClick={() => {
                       selectMenuHandler(index);
                     }}
                   >
                     <span
-                      className={`w-5 ${index === currentTab ? 'invert-[1] brightness-[100%]' : ''}`}
+                      className={`w-5 ${
+                        index === currentTab
+                          ? 'invert-[1] brightness-[100%]'
+                          : ''
+                      }`}
                     >
                       <img src={menu.icon} alt={menu.alt} />
                     </span>
                     <span
-                      className={`${index === currentTab ? 'dark:text-white text-white' : ''}`}
+                      className={`${
+                        index === currentTab ? 'dark:text-white text-white' : ''
+                      }`}
                     >
                       {menu.title}
                     </span>
