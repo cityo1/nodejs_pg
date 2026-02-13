@@ -10,8 +10,10 @@ const database = require('../database/database');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
-const uid = uuidv4();
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+
+const uid = uuidv4();
 
 exports.postAuth = async (request, response) => {
   const { username, email, password } = request.body;
@@ -33,7 +35,7 @@ exports.postAuth = async (request, response) => {
 
     // 비밀번호를 암호화 한다.
     const hashPassword = await bcrypt.hash(password, 10);
-    console.log(hashPassword);
+    // console.log(hashPassword);
 
     // 프로필 이미지 저장 경로 설정
     let profileImagePath = null;
@@ -59,5 +61,49 @@ exports.postAuth = async (request, response) => {
     return response
       .status(500)
       .json({ msg: '데이터 입력 오류: ' + error.message });
+  }
+};
+
+exports.postLogin = async (request, response) => {
+  const { email, password } = request.body;
+
+  // 1. 이메일 데이터 존재 여부 요청을 데이터베이스로 보낸다.
+  // 2. 이메일이 존재하면 비밀번호를 비교한다.
+  // 3. 비밀번호가 일치하면 회원 정보 암호화 하여 반환(jwt)
+  try {
+    const rows = await database.pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email],
+    );
+    if (rows.rows.length === 0) {
+      return response
+        .status(200)
+        .json({ msg: '존재하지 않는 이메일입니다.', success: false });
+    }
+
+    const isMatch = await bcrypt.compare(password, rows.rows[0].password);
+    if (!isMatch) {
+      return response
+        .status(200)
+        .json({ msg: '비밀번호가 일치하지 않습니다.', success: false });
+    }
+
+    const token = jwt.sign(
+      // 파라미터 순서 유지
+      {
+        id: rows.rows[0].id,
+        username: rows.rows[0].username,
+        email: rows.rows[0].email,
+        profile_image: rows.rows[0].profile_image,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '3h' },
+    );
+
+    return response
+      .status(201)
+      .json({ msg: '로그인 성공', token: token, success: true });
+  } catch (error) {
+    return response.status(500).json({ msg: '로그인 오류: ' + error.message });
   }
 };
